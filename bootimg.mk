@@ -1,4 +1,4 @@
-MKBOOTIMG := device/samsung/a42xq/mkbootimg
+MKBOOTIMG := device/samsung/m42xq/mkbootimg
 
 FLASH_IMAGE_TARGET ?= $(PRODUCT_OUT)/recovery.tar
 

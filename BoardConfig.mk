@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-DEVICE_PATH := device/samsung/a42xq
+DEVICE_PATH := device/samsung/m42xq
 
 # Android Verified Boot
 BOARD_AVB_ENABLE := false
@@ -48,10 +48,10 @@ ENABLE_SCHEDBOOST := true
 TARGET_USES_UEFI := true
 
 # Assert
-TARGET_OTA_ASSERT_DEVICE := a42xq
+TARGET_OTA_ASSERT_DEVICE := m42xq
 
 # Kernel: Base flags
-BOARD_KERNEL_CMDLINE := console=null androidboot.hardware=qcom androidboot.memcg=1 lpm_levels.sleep_disabled=1 video=vfb:640x400,bpp=32,memsize=3072000 msm_rtb.filter=0x237 service_locator.enable=1 swiotlb=1 androidboot.usbcontroller=a600000.dwc3 printk.devkmsg=on firmware_class.path=/vendor/firmware_mnt/image
+BOARD_KERNEL_CMDLINE := console=null androidboot.hardware=qcom androidboot.memcg=1 lpm_levels.sleep_disabled=1 video=vfb:640x400,bpp=32,memsize=3072000 msm_rtb.filter=0x237 service_locator.enable=1 swiotlb=2048 androidboot.usbcontroller=a600000.dwc3 printk.devkmsg=on firmware_class.path=/vendor/firmware_mnt/image cgroup.memory=nokmem,nosocket loop.max_part=7 
 BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 BOARD_BOOTIMG_HEADER_VERSION := 2
 
@@ -69,7 +69,7 @@ BOARD_MKBOOTIMG_ARGS += --pagesize $(BOARD_KERNEL_PAGESIZE)
 BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOTIMG_HEADER_VERSION)
 BOARD_MKBOOTIMG_ARGS += --board $(BOARD_NAME)
-BOARD_CUSTOM_BOOTIMG_MK := device/samsung/a42xq/bootimg.mk
+BOARD_CUSTOM_BOOTIMG_MK := device/samsung/m42xq/bootimg.mk
 
 # Prebuilt: Kernel
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/Image.gz
@@ -132,10 +132,19 @@ LZMA_RAMDISK_TARGETS := recovery
 BOARD_RAMDISK_USE_LZMA := true
 
 # Partitions
-BOARD_SUPER_PARTITION_GROUPS := main
-BOARD_SUPER_PARTITION_SIZE := 7730906700
-BOARD_MAIN_SIZE := 7730906700
-BOARD_MAIN_PARTITION_LIST := system odm vendor product
+BOARD_FLASH_BLOCK_SIZE := 262144 
+BOARD_BOOTIMAGE_PARTITION_SIZE := 81788928
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 81788928
+BOARD_HAS_LARGE_FILESYSTEM := true
+BOARD_SYSTEMIMAGE_PARTITION_TYPE := ext4
+BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
+TARGET_COPY_OUT_VENDOR := vendor
+BOARD_SUPER_PARTITION_SIZE := 9126805504 
+BOARD_SUPER_PARTITION_GROUPS := samsung_dynamic_partitions
+BOARD_SAMSUNG_DYNAMIC_PARTITIONS_PARTITION_LIST := system vendor product odm
+BOARD_SAMSUNG_DYNAMIC_PARTITIONS_SIZE := 9122611200 
+
 
 # TWRP Configuration: Basic config
 TW_THEME := portrait_hdpi
@@ -156,6 +165,7 @@ TW_USE_SAMSUNG_HAPTICS := true
 TARGET_SUPPORTS_64_BIT_APPS := false
 TW_CRYPTO_SYSTEM_VOLD_DEBUG := true
 TW_INCLUDE_RESETPROP := true
+TW_USE_TOOLBOX := true
 
 # TWRP Configuration: Brightness/CPU
 TW_CUSTOM_CPU_TEMP_PATH := /sys/class/thermal/thermal_zone28/temp
@@ -169,3 +179,9 @@ TARGET_USES_LOGD := true
 
 # Backups
 TW_BACKUP_EXCLUSIONS := /data/fonts
+
+# APEX
+DEXPREOPT_GENERATE_APEX_IMAGE := true
+
+# Display
+TARGET_SCREEN_DENSITY := 300

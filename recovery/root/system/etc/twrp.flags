@@ -6,7 +6,8 @@
 /boot               emmc         /dev/block/bootdevice/by-name/boot              flags=backup=1;display="Kernel Image";flashimg=1
 /dtbo               emmc         /dev/block/bootdevice/by-name/dtbo              flags=backup=1;display="DTBO Image";flashimg=1
 /recovery           emmc         /dev/block/bootdevice/by-name/recovery          flags=backup=1;display="Recovery Image";flashimg=1
-/vbmeta             emmc         /dev/block/bootdevice/by-name/vbmeta            flags=backup=1;display="Vbmeta Image"
+/vbmeta_samsung     emmc         /dev/block/bootdevice/by-name/vbmeta_samsung    flags=backup=1;display="Vbmeta samsung"
+/vbmeta_system      emmc         /dev/block/bootdevice/by-name/vbmeta_system     flags=backup=1;display="Vbmeta system"
 
 # Logical Points
 system              /system      ext4        discard                wait,logical,first_stage_mount
@@ -19,14 +20,9 @@ odm                 /odm         ext4        discard                wait,logical
 /cache              ext4         /dev/block/bootdevice/by-name/cache             flags=display="Cache";backup=1;wipeingui
 /metadata           ext4         /dev/block/bootdevice/by-name/metadata          flags=display="Metadata";backup=1;wipeingui
 
-# Persist Point
-/persist            ext4         /dev/block/bootdevice/by-name/persist           flags=display="Persist";backup=1
-/persist_image      emmc         /dev/block/bootdevice/by-name/persist           flags=display="Persist Image";backup=1;flashimg=1
-
 # Modem/EFS Mount Point (Combo)
-/efs                emmc         /dev/block/bootdevice/by-name/efs               flags=display="EFS";backup=1
-/modemst1           emmc         /dev/block/bootdevice/by-name/modemst1          flags=subpartitionof=/efs;backup=1
-/modemst2           emmc         /dev/block/bootdevice/by-name/modemst2          flags=subpartitionof=/efs;backup=1
+/efs                ext4         /dev/block/bootdevice/by-name/sec_efs           flags=display="EFS";backup=1
+/modem              emmc         /dev/block/bootdevice/by-name/modem             flags=display="modem"backup=1
 
 # SD Card & USB-OTG Points
 /external_sd        auto         /dev/block/mmcblk0p1  /dev/block/mmcblk0        flags=display="MicroSD Card";storage;wipeingui;removable
